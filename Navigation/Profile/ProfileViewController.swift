@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProfileViewController: UIViewController {
     
@@ -37,15 +38,13 @@ class ProfileViewController: UIViewController {
     private let close = UIButton()
     private lazy var header = ProfileHeaderView()
     private lazy var tableHeader = ProfileTableHederView()
-    private lazy var image = UIImageView()
+    private lazy var image = UIImageView(image: #imageLiteral(resourceName: "cat"))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupTableView()
         setupViews()
-        
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,16 +52,21 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupViews() {
+        setupAvater()
+        
         view.addSubview(tableView)
         
-        let constraints = [
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        ]
-        
-        NSLayoutConstraint.activate(constraints)
+        tableView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalToSuperview()
+        }
+    }
+    
+    private func setupAvater() {
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 120/2
+        image.layer.borderWidth = 3
+        image.layer.borderColor = UIColor.white.cgColor
     }
     
     private func setupTableView() {
@@ -98,21 +102,16 @@ class ProfileViewController: UIViewController {
 
                     self.view.addSubview(self.background)
                     self.view.addSubview(self.image)
-       
-
-                    let constraints = [
-                        self.background.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-                        self.background.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-                        self.background.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-                        self.background.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-
-                        self.image.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-                        self.image.heightAnchor.constraint(equalTo: self.image.widthAnchor),
-                        self.image.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                        self.image.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                    ]
-
-                    NSLayoutConstraint.activate(constraints)
+                
+                    self.background.snp.makeConstraints {
+                        $0.leading.trailing.top.bottom.equalToSuperview()
+                    }
+                
+                    self.image.snp.makeConstraints {
+                        $0.leading.trailing.equalToSuperview()
+                        $0.centerY.equalToSuperview()
+                        $0.height.equalTo(self.image.snp.width)
+                    }
                     self.image.layoutIfNeeded()
 //                }
             }
@@ -122,16 +121,14 @@ class ProfileViewController: UIViewController {
                 self.close.translatesAutoresizingMaskIntoConstraints = false
                 self.close.setImage(closeImage, for: [])
                 
-                self.background.addSubview(self.close)
+                self.view.addSubview(self.close)
                 
-                let constraints = [
-                    self.close.topAnchor.constraint(equalTo: self.background.topAnchor),
-                    self.close.trailingAnchor.constraint(equalTo: self.background.trailingAnchor),
-                    self.close.widthAnchor.constraint(equalToConstant: 50),
-                    self.close.heightAnchor.constraint(equalToConstant: 50)
-                ]
-
-                NSLayoutConstraint.activate(constraints)
+                self.close.snp.makeConstraints {
+                    $0.top.equalTo(self.view.safeAreaLayoutGuide)
+                    $0.trailing.equalTo(self.view.safeAreaLayoutGuide)
+                    $0.width.equalTo(50)
+                    $0.height.equalTo(50)
+                }
 
                 self.close.layer.opacity = 1
             }
@@ -154,6 +151,7 @@ class ProfileViewController: UIViewController {
             self.image.removeFromSuperview()
             self.tableHeader.setupViews()
             self.background.removeFromSuperview()
+            self.close.removeFromSuperview()
             let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.avatarTap))
             self.tableHeader.profileHeaderView.imageView.addGestureRecognizer(recognizer)
         })
@@ -210,7 +208,6 @@ extension ProfileViewController: UITableViewDelegate {
             let recognizer = UITapGestureRecognizer(target: self, action: #selector(avatarTap))
             headerView.profileHeaderView.imageView.addGestureRecognizer(recognizer)
             self.header = headerView.profileHeaderView
-            self.image = headerView.profileHeaderView.imageView
             self.tableHeader = headerView
             
             return headerView

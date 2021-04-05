@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 var isAnimating: Bool = false
 
@@ -90,11 +91,40 @@ class ProfileHeaderView: UIView {
         super.layoutSubviews()
         
         if !isAnimating {
-            imageView.frame = CGRect(x: 16, y: safeAreaInsets.top + 16, width: 120, height: 120)
-            profileLabel.frame = CGRect(x: 152, y: safeAreaInsets.top + 27, width: 200, height: 50)
-            statusLabel.frame = CGRect(x: 152, y: imageView.frame.maxY - 50, width: 200, height: 50)
-            profileButton.frame = CGRect(x: 16, y: textField.frame.maxY + 16, width: frame.width - 32, height: 50)
-            textField.frame = CGRect(x: 152, y: statusLabel.frame.maxY, width: frame.width - 168, height: 40)
+            imageView.snp.makeConstraints {
+                $0.top.equalTo(safeAreaInsets.top + 16)
+                $0.leading.equalTo(safeAreaInsets.left + 16)
+                $0.width.equalTo(120)
+                $0.height.equalTo(120)
+            }
+            
+            profileLabel.snp.makeConstraints {
+                $0.top.equalTo(safeAreaInsets.top + 27)
+                $0.leading.equalTo(safeAreaInsets.left + 152)
+                $0.width.equalTo(200)
+                $0.height.equalTo(50)
+            }
+            
+            statusLabel.snp.makeConstraints {
+                $0.top.equalTo(imageView.snp.bottom).offset(-50)
+                $0.leading.equalTo(safeAreaInsets.left + 152)
+                $0.width.equalTo(200)
+                $0.height.equalTo(50)
+            }
+            
+            profileButton.snp.makeConstraints {
+                $0.top.equalTo(textField.snp.bottom).offset(16)
+                $0.leading.equalTo(safeAreaInsets.left + 16)
+                $0.width.equalToSuperview().offset(-32)
+                $0.height.equalTo(50)
+            }
+            
+            textField.snp.makeConstraints {
+                $0.top.equalTo(statusLabel.snp.bottom)
+                $0.leading.equalTo(safeAreaInsets.left + 152)
+                $0.width.equalToSuperview().offset(-168)
+                $0.height.equalTo(40)
+            }
         }
     }
     
