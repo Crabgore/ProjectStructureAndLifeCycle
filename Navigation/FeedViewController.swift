@@ -12,9 +12,19 @@ final class FeedViewController: UIViewController {
     
 //    let post: Post = Post(title: "Пост")
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        print(type(of: self), #function)
+    var output: FeedViewOutput?
+    
+    private lazy var stackView: ContainerView = {
+        let view = ContainerView()
+        view.backgroundColor = nil
+        view.onTap = output?.showPost
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    init(output: FeedViewOutput) {
+        super.init(nibName: nil, bundle: nil)
+        self.output = output
     }
     
     required init?(coder: NSCoder) {
@@ -24,6 +34,9 @@ final class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+        output?.navigationController = self.navigationController
+        
         print(type(of: self), #function)
     }
     
@@ -57,13 +70,32 @@ final class FeedViewController: UIViewController {
         print(type(of: self), #function)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "post" else {
-            return
-        }
-        guard let postViewController = segue.destination as? PostViewController else {
-            return
-        }
-//        postViewController.post = post
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard segue.identifier == "post" else {
+//            return
+//        }
+//        guard let postViewController = segue.destination as? PostViewController else {
+//            return
+//        }
+////        postViewController.post = post
+//    }
+    
+    private func setupView() {
+        view.addSubview(stackView)
+        
+        let constraints = [
+            stackView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            stackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            stackView.widthAnchor.constraint(equalToConstant: 150),
+            stackView.heightAnchor.constraint(equalToConstant: 115)
+        ]
+        
+        NSLayoutConstraint.activate(constraints)
     }
+}
+
+protocol FeedViewOutput {
+    var navigationController: UINavigationController? { get set }
+
+    func showPost()
 }

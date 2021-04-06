@@ -10,10 +10,23 @@ import UIKit
 
 class PostViewController: UIViewController {
     
-    var post: Post?
+    var post: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = post
+        setupView()
+    }
+    
+    private func setupView() {
+        view.backgroundColor = .red
+        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        navigationItem.rightBarButtonItems = [add]
+    }
+    
+    @objc private func addTapped() {
+        let controller = InfoViewController()
+        self.present(controller, animated: true, completion: nil)
     }
 }
