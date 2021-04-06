@@ -12,6 +12,7 @@ class LogInViewController: UIViewController {
     
     private let scrollView = UIScrollView()
     private let wrapperView = UIView()
+    var delegate: LoginViewControllerDelegate?
     
     let logoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -112,8 +113,12 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func loginButtonPressed() {
-        let profile = ProfileViewController()
-        navigationController?.pushViewController(profile, animated: true)
+        if ((delegate?.checkLogin(userLogin: emailTextField.text!))! && (delegate?.checkPass(userPass: passwordTextField.text!))!) {
+            let profile = ProfileViewController()
+            navigationController?.pushViewController(profile, animated: true)
+        } else {
+            print("inserted data is incorrect")
+        }
     }
     
     private func setupViews() {
@@ -173,6 +178,11 @@ class LogInViewController: UIViewController {
         
         NSLayoutConstraint.activate(constraints)
     }
+}
+
+protocol LoginViewControllerDelegate {
+    func checkLogin(userLogin: String) -> Bool
+    func checkPass(userPass: String) -> Bool
 }
 
 extension UIView {
