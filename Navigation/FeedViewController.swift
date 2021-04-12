@@ -12,6 +12,7 @@ final class FeedViewController: UIViewController {
     
 //    let post: Post = Post(title: "Пост")
     
+    var coordinator: FeedCoordinator?
     var output: FeedViewOutput?
     
     private lazy var stackView: ContainerView = {
@@ -35,7 +36,7 @@ final class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        output?.navigationController = self.navigationController
+        output?.coordinator = self.coordinator
         
         print(type(of: self), #function)
     }
@@ -95,7 +96,7 @@ final class FeedViewController: UIViewController {
 }
 
 protocol FeedViewOutput {
-    var navigationController: UINavigationController? { get set }
+    var coordinator: FeedCoordinator? { get set }
 
     func showPost()
 }

@@ -10,6 +10,8 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
+    var coordinator: FeedCoordinator?
+    
     private lazy var showAlertButton: UIButton = {
         let button = UIButton()
         button.setTitle("show alert", for: .normal)
@@ -45,15 +47,6 @@ class InfoViewController: UIViewController {
     }
     
     @objc private func showAlert(_ sender: Any) {
-        let alertController = UIAlertController(title: "Удалить пост?", message: "Пост нельзя будет восстановить", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Отмена", style: .default) { _ in
-            print("Отмена")
-        }
-        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { _ in
-            print("Удалить")
-        }
-        alertController.addAction(cancelAction)
-        alertController.addAction(deleteAction)
-        self.present(alertController, animated: true, completion: nil)
+        coordinator?.showAlert()
     }
 }

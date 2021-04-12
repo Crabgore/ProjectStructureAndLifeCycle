@@ -10,6 +10,7 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    var coordinator: ProfileCoordinator?
     private let scrollView = UIScrollView()
     private let wrapperView = UIView()
     var delegate: LoginViewControllerDelegate?
@@ -114,8 +115,8 @@ class LogInViewController: UIViewController {
     
     @objc private func loginButtonPressed() {
         if ((delegate?.checkLogin(userLogin: emailTextField.text!))! && (delegate?.checkPass(userPass: passwordTextField.text!))!) {
-            let profile = ProfileViewController()
-            navigationController?.pushViewController(profile, animated: true)
+            print("presses")
+            coordinator?.loginButtonPressed()
         } else {
             print("inserted data is incorrect")
         }

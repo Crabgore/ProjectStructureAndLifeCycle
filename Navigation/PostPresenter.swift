@@ -10,12 +10,9 @@ import Foundation
 import UIKit
 
 class PostPresenter: FeedViewOutput {
-    var navigationController: UINavigationController?
-    
-    
+    var coordinator: FeedCoordinator?
+        
     func showPost() {
-        let controller = PostViewController()
-        controller.post = "Post"
-        navigationController?.pushViewController(controller, animated: true)
+        coordinator?.showPost()
     }
 }

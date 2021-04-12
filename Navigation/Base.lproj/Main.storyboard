@@ -29,7 +29,7 @@
         <scene sceneID="pR1-4r-6ob">
             <objects>
                 <navigationController id="vyo-r6-qwt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Feed" image="house.fill" catalog="system" id="0HN-zR-0uF"/>
+                    <tabBarItem key="tabBarItem" title="Feed" image="person" catalog="system" id="0HN-zR-0uF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jwt-CW-Jdi">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -45,6 +45,7 @@
         <!--Feed-->
         <scene sceneID="bye-GP-P6Y">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zo3-uO-y7P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="UOy-8g-tjm" customClass="FeedViewController" customModule="Navigation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hnQ-fB-PJI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -92,7 +93,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Feed" id="CTA-33-ygc"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zo3-uO-y7P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="743" y="-541"/>
         </scene>
@@ -188,7 +188,7 @@
         <segue reference="tTv-en-gx1"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="house.fill" catalog="system" width="128" height="106"/>
+        <image name="person" catalog="system" width="128" height="117"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
