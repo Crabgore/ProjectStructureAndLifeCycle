@@ -10,6 +10,7 @@ import UIKit
 
 class PostViewController: UIViewController {
     
+    var coordinator: FeedCoordinator?
     var post: String?
 
     override func viewDidLoad() {
@@ -26,7 +27,6 @@ class PostViewController: UIViewController {
     }
     
     @objc private func addTapped() {
-        let controller = InfoViewController()
-        self.present(controller, animated: true, completion: nil)
+        coordinator?.presentPost()
     }
 }

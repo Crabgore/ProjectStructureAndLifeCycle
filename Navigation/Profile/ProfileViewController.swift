@@ -10,6 +10,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+    weak var coordinator: ProfileCoordinator?
     let posts = [Post(author: "Danny",
                       description: "New Dune Photos",
                       image: "dune-2020",
@@ -221,8 +222,7 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            let photosViewController = PhotosViewController()
-            navigationController?.pushViewController(photosViewController, animated: true)
+            coordinator?.photosSelected()
         }
     }
 
