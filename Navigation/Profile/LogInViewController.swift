@@ -15,6 +15,12 @@ class LogInViewController: UIViewController {
     private let wrapperView = UIView()
     var delegate: LoginViewControllerDelegate?
     
+    let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .gray)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
+    
     let logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "logo")
@@ -76,6 +82,21 @@ class LogInViewController: UIViewController {
         button.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var pickUpPassword: UIButton = {
+        let button = UIButton()
+        button.setTitle("Подобрать пароль", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel").alpha(0.8), for: .selected)
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel").alpha(0.8), for: .highlighted)
+        button.layer.cornerRadius = 10
+        button.layer.masksToBounds = true
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(pickUpPass), for: .touchUpInside)
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,6 +143,15 @@ class LogInViewController: UIViewController {
         }
     }
     
+    @objc private func pickUpPass() {
+        spinner.startAnimating()
+        
+        let operationQueue = OperationQueue()
+        operationQueue.qualityOfService = .background
+        let operation = BruteForceOperation(passField: passwordTextField, spinner: spinner)
+        operationQueue.addOperation(operation)
+    }
+    
     private func setupViews() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         wrapperView.translatesAutoresizingMaskIntoConstraints = false
@@ -129,7 +159,7 @@ class LogInViewController: UIViewController {
         
         view.addSubview(scrollView)
         scrollView.addSubview(wrapperView)
-        wrapperView.addSubviews(logoImageView, textViews, loginButton)
+        wrapperView.addSubviews(logoImageView, textViews, loginButton, pickUpPassword, spinner)
         textViews.addSubviews(emailTextField, deviderView, passwordTextField)
         
         
@@ -174,7 +204,18 @@ class LogInViewController: UIViewController {
             loginButton.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 16),
             loginButton.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
             loginButton.heightAnchor.constraint(equalToConstant: 50),
-            loginButton.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor)
+            
+            pickUpPassword.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
+            pickUpPassword.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 16),
+            pickUpPassword.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
+            pickUpPassword.heightAnchor.constraint(equalToConstant: 50),
+            
+            spinner.topAnchor.constraint(equalTo: pickUpPassword.bottomAnchor, constant: 16),
+            spinner.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 16),
+            spinner.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
+            spinner.widthAnchor.constraint(equalToConstant: 50),
+            spinner.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor),
+            
         ]
         
         NSLayoutConstraint.activate(constraints)
