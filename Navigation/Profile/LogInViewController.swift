@@ -161,7 +161,7 @@ class LogInViewController: UIViewController {
             print("presses")
             coordinator?.loginButtonPressed()
         } else {
-            print("inserted data is incorrect")
+            handleError(error: Errors.incorrectData)
         }
     }
     
@@ -172,6 +172,13 @@ class LogInViewController: UIViewController {
         operationQueue.qualityOfService = .background
         let operation = BruteForceOperation(passField: passwordTextField, spinner: spinner)
         operationQueue.addOperation(operation)
+    }
+    
+    private func handleError(error: Errors) {
+        switch error {
+        case .incorrectData:
+            coordinator?.showAlert()
+        }
     }
     
     private func setupViews() {
