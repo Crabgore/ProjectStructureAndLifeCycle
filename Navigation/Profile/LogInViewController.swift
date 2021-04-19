@@ -157,11 +157,15 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func loginButtonPressed() {
-        if ((delegate?.checkLogin(userLogin: emailTextField.text!))! && (delegate?.checkPass(userPass: passwordTextField.text!))!) {
-            print("presses")
-            coordinator?.loginButtonPressed()
-        } else {
-            handleError(error: Errors.incorrectData)
+        checkLogin { result in
+            switch result {
+            case .success(let action):
+                if let mAction = action {
+                    mAction()
+                }
+            case .failure(.incorrectData):
+                coordinator?.showAlert()
+            }
         }
     }
     
@@ -172,6 +176,14 @@ class LogInViewController: UIViewController {
         operationQueue.qualityOfService = .background
         let operation = BruteForceOperation(passField: passwordTextField, spinner: spinner)
         operationQueue.addOperation(operation)
+    }
+    
+    private func checkLogin(completion: (Result<(() -> Void)?, Errors>) -> Void) {
+        if ((delegate?.checkLogin(userLogin: emailTextField.text!))! && (delegate?.checkPass(userPass: passwordTextField.text!))!) {
+            completion(.success(coordinator?.loginButtonPressed))
+        } else {
+            completion(.failure(.incorrectData))
+        }
     }
     
     private func handleError(error: Errors) {
