@@ -13,6 +13,7 @@ class LogInViewController: UIViewController {
     var coordinator: ProfileCoordinator?
     private let scrollView = UIScrollView()
     private let wrapperView = UIView()
+    private let operationQueue = OperationQueue()
     var delegate: LoginViewControllerDelegate?
     
     let spinner: UIActivityIndicatorView = {
@@ -102,6 +103,7 @@ class LogInViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupViews()
+        initOperationQueue()
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -146,10 +148,23 @@ class LogInViewController: UIViewController {
     @objc private func pickUpPass() {
         spinner.startAnimating()
         
-        let operationQueue = OperationQueue()
+        operationQueue.cancelAllOperations()
+        let operation = BruteForceOperation(block: setGeneratedPassword)
+        print(operationQueue.operationCount)
+        if operationQueue.operationCount == 0 {
+            operationQueue.addOperation(operation)
+        }
+    }
+    
+    private func setGeneratedPassword(password: String) {
+        self.passwordTextField.isSecureTextEntry = false
+        self.passwordTextField.text = password
+        self.spinner.stopAnimating()
+    }
+    
+    private func initOperationQueue() {
         operationQueue.qualityOfService = .background
-        let operation = BruteForceOperation(passField: passwordTextField, spinner: spinner)
-        operationQueue.addOperation(operation)
+        operationQueue.maxConcurrentOperationCount = 1
     }
     
     private func setupViews() {
