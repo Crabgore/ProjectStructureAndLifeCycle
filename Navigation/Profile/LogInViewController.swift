@@ -151,9 +151,8 @@ class LogInViewController: UIViewController {
         operationQueue.cancelAllOperations()
         let operation = BruteForceOperation(block: setGeneratedPassword)
         print(operationQueue.operationCount)
-        if operationQueue.operationCount == 0 {
-            operationQueue.addOperation(operation)
-        }
+        operationQueue.addOperation(operation)
+    
     }
     
     private func setGeneratedPassword(password: String) {
