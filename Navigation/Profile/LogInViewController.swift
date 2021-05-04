@@ -13,6 +13,7 @@ class LogInViewController: UIViewController {
     var coordinator: ProfileCoordinator?
     private let scrollView = UIScrollView()
     private let wrapperView = UIView()
+    private var timer: Timer?
     var delegate: LoginViewControllerDelegate?
     
     var count = 0
@@ -116,7 +117,7 @@ class LogInViewController: UIViewController {
     }
     
     private func startTimer() {
-        let timer = Timer(timeInterval: 1, repeats: true) { (_) in
+        timer = Timer(timeInterval: 1, repeats: true) { (_) in
             self.timerLabel.text = "Вы находитесь на этом экране \(self.count) секунд(ы)"
             self.count += 1
             if self.count > 30 {
@@ -124,7 +125,7 @@ class LogInViewController: UIViewController {
             }
         }
         
-        RunLoop.main.add(timer, forMode: .common)
+        RunLoop.main.add(timer!, forMode: .common)
     }
     
     /// Keyboard observers
@@ -140,6 +141,7 @@ class LogInViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        timer?.invalidate()
     }
     
     // MARK: Keyboard actions
