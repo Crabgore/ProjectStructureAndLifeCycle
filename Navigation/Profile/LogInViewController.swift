@@ -13,8 +13,16 @@ class LogInViewController: UIViewController {
     var coordinator: ProfileCoordinator?
     private let scrollView = UIScrollView()
     private let wrapperView = UIView()
-    private let operationQueue = OperationQueue()
+    private var timer: Timer?
     var delegate: LoginViewControllerDelegate?
+    
+    var count = 0
+    let timerLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .gray)
@@ -105,6 +113,20 @@ class LogInViewController: UIViewController {
         setupViews()
         initOperationQueue()
         navigationController?.navigationBar.isHidden = true
+        
+        startTimer()
+    }
+    
+    private func startTimer() {
+        timer = Timer(timeInterval: 1, repeats: true) { (_) in
+            self.timerLabel.text = "Вы находитесь на этом экране \(self.count) секунд(ы)"
+            self.count += 1
+            if self.count > 30 {
+                self.timerLabel.textColor = .red
+            }
+        }
+        
+        RunLoop.main.add(timer!, forMode: .common)
     }
     
     /// Keyboard observers
@@ -120,6 +142,7 @@ class LogInViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        timer?.invalidate()
     }
     
     // MARK: Keyboard actions
@@ -174,7 +197,7 @@ class LogInViewController: UIViewController {
         
         view.addSubview(scrollView)
         scrollView.addSubview(wrapperView)
-        wrapperView.addSubviews(logoImageView, textViews, loginButton, pickUpPassword, spinner)
+        wrapperView.addSubviews(logoImageView, textViews, loginButton, pickUpPassword, spinner, timerLabel)
         textViews.addSubviews(emailTextField, deviderView, passwordTextField)
         
         
@@ -194,6 +217,11 @@ class LogInViewController: UIViewController {
             logoImageView.centerXAnchor.constraint(equalTo: wrapperView.centerXAnchor),
             logoImageView.heightAnchor.constraint(equalToConstant: 100),
             logoImageView.widthAnchor.constraint(equalToConstant: 100),
+            
+            timerLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 50),
+            timerLabel.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 12),
+            timerLabel.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -12),
+            timerLabel.heightAnchor.constraint(equalToConstant: 50),
             
             textViews.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 120),
             textViews.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 16),
