@@ -10,12 +10,10 @@ import Foundation
 import UIKit
 
 class BruteForceOperation: Operation {
-    let passField: UITextField
-    let spinner: UIActivityIndicatorView
+    let block: (String) -> Void
     
-    init(passField: UITextField, spinner: UIActivityIndicatorView) {
-        self.passField = passField
-        self.spinner = spinner
+    init(block: @escaping (String) -> Void) {
+        self.block = block
     }
     
     override func main() {
@@ -46,9 +44,7 @@ class BruteForceOperation: Operation {
         }
         
         DispatchQueue.main.async {
-            self.passField.isSecureTextEntry = false
-            self.passField.text = password
-            self.spinner.stopAnimating()
+            self.block(password)
         }
     }
     
@@ -67,7 +63,7 @@ class BruteForceOperation: Operation {
             }
         }
 
-        print(str)
+//        print(str)
         
         return str
     }
