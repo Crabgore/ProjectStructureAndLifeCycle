@@ -39,13 +39,16 @@ class BruteForceOperation: Operation {
 
         var password: String = ""
 
-        while password != passwordToUnlock {
+        while password != passwordToUnlock && !self.isCancelled {
             password = generateBruteForce(password, fromArray: ALLOWED_CHARACTERS)
         }
         
-        DispatchQueue.main.async {
-            self.block(password)
+        if !self.isCancelled {
+            DispatchQueue.main.async {
+                self.block(password)
+            }
         }
+
     }
     
     func generateBruteForce(_ string: String, fromArray array: [String]) -> String {
@@ -63,7 +66,7 @@ class BruteForceOperation: Operation {
             }
         }
 
-//        print(str)
+        print(str)
         
         return str
     }
