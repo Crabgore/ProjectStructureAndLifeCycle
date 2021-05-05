@@ -160,11 +160,15 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func loginButtonPressed() {
-        if ((delegate?.checkLogin(userLogin: emailTextField.text!))! && (delegate?.checkPass(userPass: passwordTextField.text!))!) {
-            print("presses")
-            coordinator?.loginButtonPressed()
-        } else {
-            print("inserted data is incorrect")
+        checkLogin { result in
+            switch result {
+            case .success(let action):
+                if let mAction = action {
+                    mAction()
+                }
+            case .failure(.incorrectData):
+                coordinator?.showAlert()
+            }
         }
     }
     
@@ -188,6 +192,21 @@ class LogInViewController: UIViewController {
     private func initOperationQueue() {
         operationQueue.qualityOfService = .background
         operationQueue.maxConcurrentOperationCount = 1
+    }
+    
+    private func checkLogin(completion: (Result<(() -> Void)?, Errors>) -> Void) {
+        if ((delegate?.checkLogin(userLogin: emailTextField.text!))! && (delegate?.checkPass(userPass: passwordTextField.text!))!) {
+            completion(.success(coordinator?.loginButtonPressed))
+        } else {
+            completion(.failure(.incorrectData))
+        }
+    }
+    
+    private func handleError(error: Errors) {
+        switch error {
+        case .incorrectData:
+            coordinator?.showAlert()
+        }
     }
     
     private func setupViews() {

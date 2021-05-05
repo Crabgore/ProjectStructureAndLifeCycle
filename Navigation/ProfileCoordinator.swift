@@ -28,4 +28,13 @@ class ProfileCoordinator: Coordinator {
         let photosViewController = PhotosViewController()
         navigationController?.pushViewController(photosViewController, animated: true)
     }
+    
+    func showAlert() {
+        let alertController = UIAlertController(title: "Ошибка!", message: "Введены неверные данные. Проверьте введённые данные", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            print("OK")
+        }
+        alertController.addAction(okAction)
+        navigationController?.present(alertController, animated: true, completion: nil)
+    }
 }
