@@ -9,5 +9,8 @@
 import Foundation
 
 enum Errors: Error {
-    case incorrectData
+    case incorrectLogin
+    case incorrectPass
+    case loginIsEmpty
+    case passIsEmpty
 }

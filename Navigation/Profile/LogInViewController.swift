@@ -163,8 +163,14 @@ class LogInViewController: UIViewController {
                 if let mAction = action {
                     mAction()
                 }
-            case .failure(.incorrectData):
-                coordinator?.showAlert()
+            case .failure(.incorrectLogin):
+                coordinator?.showAlert(error: .incorrectLogin)
+            case .failure(.incorrectPass):
+                coordinator?.showAlert(error: .incorrectPass)
+            case .failure(.loginIsEmpty):
+                coordinator?.showAlert(error: .loginIsEmpty)
+            case .failure(.passIsEmpty):
+                coordinator?.showAlert(error: .passIsEmpty)
             }
         }
     }
@@ -179,17 +185,20 @@ class LogInViewController: UIViewController {
     }
     
     private func checkLogin(completion: (Result<(() -> Void)?, Errors>) -> Void) {
+        if emailTextField.text == "" || emailTextField.text == nil {
+            completion(.failure(.loginIsEmpty))
+        }
+        
+        if passwordTextField.text == "" || passwordTextField.text == nil {
+            completion(.failure(.passIsEmpty))
+        }
+        
         if ((delegate?.checkLogin(userLogin: emailTextField.text!))! && (delegate?.checkPass(userPass: passwordTextField.text!))!) {
             completion(.success(coordinator?.loginButtonPressed))
-        } else {
-            completion(.failure(.incorrectData))
-        }
-    }
-    
-    private func handleError(error: Errors) {
-        switch error {
-        case .incorrectData:
-            coordinator?.showAlert()
+        } else if !(delegate?.checkLogin(userLogin: emailTextField.text!))! {
+            completion(.failure(.incorrectLogin))
+        } else if !(delegate?.checkPass(userPass: passwordTextField.text!))! {
+            completion(.failure(.incorrectPass))
         }
     }
     
