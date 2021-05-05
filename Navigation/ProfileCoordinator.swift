@@ -29,8 +29,21 @@ class ProfileCoordinator: Coordinator {
         navigationController?.pushViewController(photosViewController, animated: true)
     }
     
-    func showAlert() {
-        let alertController = UIAlertController(title: "Ошибка!", message: "Введены неверные данные. Проверьте введённые данные", preferredStyle: .alert)
+    func showAlert(error: Errors) {
+        var alertMessage = ""
+        
+        switch error {
+        case .loginIsEmpty:
+            alertMessage = "Введите логин"
+        case .passIsEmpty:
+            alertMessage = "Введите пароль"
+        case .incorrectLogin:
+            alertMessage = "Введён неверный логин"
+        case .incorrectPass:
+            alertMessage = "Введён неверный пароль"
+        }
+        
+        let alertController = UIAlertController(title: "Ошибка!", message: alertMessage, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             print("OK")
         }
