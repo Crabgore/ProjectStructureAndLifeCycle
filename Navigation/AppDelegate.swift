@@ -12,7 +12,18 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let appConfig = AppConfiguration.random(people: URL(string: "https://swapi.dev/api/people/8")!, starship: URL(string: "https://swapi.dev/api/starships/3")!, planet: URL(string: "https://swapi.dev/api/planets/5")!)
+        
+        switch appConfig {
+        case .people(let people):
+            NetworkService.dataTask(url: people)
+        case .starships(let starship):
+            NetworkService.dataTask(url: starship)
+        case .planets(let planet):
+            NetworkService.dataTask(url: planet)
+        }
+        
         return true
     }
 
