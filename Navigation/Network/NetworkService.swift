@@ -44,11 +44,14 @@ struct NetworkService {
             guard let httpResponse = response as? HTTPURLResponse,
                   httpResponse.statusCode == 200 else { return }
             
+            guard let info = data else { return }
             
-            print("data: \(String(data: data!, encoding: .utf8))")
+            if let result = String(data: info, encoding: .utf8) {
+                print(result)
+            }
             
             DispatchQueue.main.async {
-                block(data!)
+                block(info)
             }
         }
         
