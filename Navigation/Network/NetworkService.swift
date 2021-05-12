@@ -32,4 +32,29 @@ struct NetworkService {
         task.resume()
     }
     
+    static func infoDataTask(url: URL, block: @escaping (Data) -> Void) {
+        let task = session.dataTask(with: url) { data, response, error in
+            print("check")
+            
+            guard error == nil else {
+                print(error.debugDescription)
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else { return }
+            
+            
+            print("data: \(String(data: data!, encoding: .utf8))")
+            
+            DispatchQueue.main.async {
+                block(data!)
+            }
+        }
+        
+        task.resume()
+    }
+    
+    
+    
 }
