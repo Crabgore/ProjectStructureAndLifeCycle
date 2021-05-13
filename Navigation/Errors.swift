@@ -10,4 +10,6 @@ import Foundation
 
 enum Errors: Error {
     case incorrectData
+    case shortPassword
+    case incorrectEmail
 }

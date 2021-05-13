@@ -24,13 +24,28 @@ class ProfileCoordinator: Coordinator {
         navigationController?.pushViewController(profile, animated: true)
     }
     
+    func closeButtonPressed() {
+        navigationController?.popViewController(animated: true)
+        
+    }
+    
     func photosSelected() {
         let photosViewController = PhotosViewController()
         navigationController?.pushViewController(photosViewController, animated: true)
     }
     
-    func showAlert() {
-        let alertController = UIAlertController(title: "Ошибка!", message: "Введены неверные данные. Проверьте введённые данные", preferredStyle: .alert)
+    func showAlert(error: Errors) {
+        var message = ""
+        switch error {
+        case .incorrectData:
+            message = "Введены неверные данные. Проверьте введённые данные"
+        case .shortPassword:
+            message = "Пароль должен содержать минимум 6 символов"
+        case .incorrectEmail:
+            message = "Логин не соответсвует адресу почты"
+        }
+        
+        let alertController = UIAlertController(title: "Ошибка!", message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             print("OK")
         }
