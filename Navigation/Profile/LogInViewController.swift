@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class LogInViewController: UIViewController {
     
@@ -14,6 +16,7 @@ class LogInViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let wrapperView = UIView()
     var delegate: LoginViewControllerDelegate?
+    var handle: AuthStateDidChangeListenerHandle?
     
     var count = 0
     let timerLabel: UILabel = {
@@ -133,6 +136,19 @@ class LogInViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            print("USERS EMAIL: \(user?.email)")
+            
+            if user != nil {
+                self.coordinator?.loginButtonPressed()
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        Auth.auth().removeStateDidChangeListener(handle!)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -157,16 +173,7 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func loginButtonPressed() {
-        checkLogin { result in
-            switch result {
-            case .success(let action):
-                if let mAction = action {
-                    mAction()
-                }
-            case .failure(.incorrectData):
-                coordinator?.showAlert()
-            }
-        }
+        delegate!.signIn(email: emailTextField.text!, pass: passwordTextField.text!, failure: coordinator!.showAlert)
     }
     
     @objc private func pickUpPass() {
@@ -176,21 +183,6 @@ class LogInViewController: UIViewController {
         operationQueue.qualityOfService = .background
         let operation = BruteForceOperation(passField: passwordTextField, spinner: spinner)
         operationQueue.addOperation(operation)
-    }
-    
-    private func checkLogin(completion: (Result<(() -> Void)?, Errors>) -> Void) {
-        if ((delegate?.checkLogin(userLogin: emailTextField.text!))! && (delegate?.checkPass(userPass: passwordTextField.text!))!) {
-            completion(.success(coordinator?.loginButtonPressed))
-        } else {
-            completion(.failure(.incorrectData))
-        }
-    }
-    
-    private func handleError(error: Errors) {
-        switch error {
-        case .incorrectData:
-            coordinator?.showAlert()
-        }
     }
     
     private func setupViews() {
@@ -271,6 +263,7 @@ class LogInViewController: UIViewController {
 protocol LoginViewControllerDelegate {
     func checkLogin(userLogin: String) -> Bool
     func checkPass(userPass: String) -> Bool
+    func signIn(email: String, pass: String, failure: @escaping (Errors) -> Void)
 }
 
 extension UIView {
