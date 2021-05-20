@@ -7,38 +7,54 @@
 //
 
 import Foundation
-import Firebase
-import FirebaseAuth
+import RealmSwift
+
+
+@objcMembers class CachedUser: Object {
+    dynamic var id: String?
+    dynamic var login: String?
+    dynamic var password: String?
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+
 
 class LoginInspector: LoginViewControllerDelegate {
-    func createNewUser(email: String, pass: String, failure: @escaping (Errors) -> Void) {
-        Auth.auth().createUser(withEmail: email, password: pass) { authResult, error in
+    func checkUsers() -> [User] {
+        return realm?.objects(CachedUser.self).compactMap {
+            guard let id = $0.id, let login = $0.login, let password = $0.password else { return nil }
+            return User(id: id, login: login, password: password)
+        } ?? []
+    }
+    
+    
+    func creteUser(id: String, email: String?, pass: String?, failure: @escaping (Errors) -> Void) -> Bool {
+        if email == nil || email == "" {
+            failure(.incorrectData)
+            return false
+        } else if pass == nil || pass == ""{
+            failure(.incorrectData)
+            return false
+        } else if pass!.count < 6 {
+            failure(.shortPassword)
+            return false
+        } else {
+            let user = CachedUser()
+            user.id = id
+            user.login = email
+            user.password = pass
             
-            print("creation result: \(String(describing: authResult))")
-            print("creation result user: \(String(describing: authResult?.user))")
-            print("creationError: \(error?.localizedDescription)")
-            
-            if error != nil && error!.localizedDescription.contains("The password must be 6 characters long or more") {
-                failure(.shortPassword)
-            } else if error != nil && error!.localizedDescription.contains("The email address is badly formatted") {
-                failure(.incorrectEmail)
+            try? realm?.write {
+                realm?.add(user)
             }
+            return true
         }
     }
     
-    func signIn(email: String, pass: String, failure: @escaping (Errors) -> Void) {
-        Auth.auth().signIn(withEmail: email, password: pass) { authResult, error in
-            
-            print("auth result: \(String(describing: authResult))")
-            print("auth result user: \(String(describing: authResult?.user))")
-            print("error: \(String(describing: error?.localizedDescription))")
-            
-            if authResult?.user == nil {
-                self.createNewUser(email: email, pass: pass, failure: failure)
-            } else if error != nil {
-                failure(.incorrectData)
-            }
-        }
+    private var realm: Realm? {
+        return try? Realm()
     }
     
     func checkLogin(userLogin: String) -> Bool {
