@@ -1,26 +1,25 @@
 //
-//  PostTableViewCell.swift
+//  LikesTableViewCell.swift
 //  Navigation
 //
-//  Created by Mihail on 27.01.2021.
+//  Created by Mihail on 25.05.2021.
 //  Copyright © 2021 Artem Novichkov. All rights reserved.
 //
 
 import UIKit
 
-class PostTableViewCell: UITableViewCell {
+class LikesTableViewCell: UITableViewCell {
     
-    var stack: CoreDataStack?
-    var post: Post? {
+    var post: Task? {
         didSet {
             authorLabel.text = post?.author
             postImageView.image = UIImage(named: post?.image ?? "blue_pixel")
-            descriptionLabel.text = post?.description
+            descriptionLabel.text = post?.descript
             likesLabel.text = "Likes: \(post?.likes ?? 0)"
             viewsLabel.text = "Views: \(post?.views ?? 0)"
         }
     }
-    
+
     private let authorLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
@@ -72,10 +71,6 @@ class PostTableViewCell: UITableViewCell {
     
 
     private func setupViews() {
-        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(self.doubleTap))
-        doubleTap.numberOfTapsRequired = 2
-        self.addGestureRecognizer(doubleTap)
-        
         contentView.addSubviews(authorLabel, postImageView, descriptionLabel, likesLabel, viewsLabel)
         
         let constraints = [
@@ -103,8 +98,5 @@ class PostTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate(constraints)
     }
-    
-    @objc func doubleTap() {
-        stack!.createNewTask(author: post!.author, description: post!.description, image: post!.image, likes: post!.likes, views: post!.views)
-    }
+
 }
