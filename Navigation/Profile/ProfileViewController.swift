@@ -11,6 +11,7 @@ import FirebaseAuth
 
 class ProfileViewController: UIViewController {
     
+    private let stack: CoreDataStack
     var coordinator: ProfileCoordinator?
     let posts = [Post(author: "Danny",
                       description: "New Dune Photos",
@@ -40,6 +41,15 @@ class ProfileViewController: UIViewController {
     private lazy var header = ProfileHeaderView()
     private lazy var tableHeader = ProfileTableHederView()
     private lazy var image = UIImageView()
+    
+    init(stack: CoreDataStack) {
+        self.stack = stack
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var exitButton: UIButton = {
         let button = UIButton()
@@ -203,6 +213,7 @@ extension ProfileViewController: UITableViewDataSource {
         } else {
             let cell: PostTableViewCell = tableView.dequeueReusableCell(withIdentifier: String(describing: PostTableViewCell.self), for: indexPath) as! PostTableViewCell
             cell.post = posts[indexPath.row]
+            cell.stack = stack
             return cell
         }
     }
@@ -247,5 +258,4 @@ extension ProfileViewController: UITableViewDelegate {
             coordinator?.photosSelected()
         }
     }
-
 }
