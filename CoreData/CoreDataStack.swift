@@ -44,8 +44,8 @@ class CoreDataStack {
         return persistentContainer.newBackgroundContext()
     }
     
-    func fetchTasks() -> [Task] {
-        let request: NSFetchRequest<Task> = Task.fetchRequest()
+    func fetchTasks() -> [PostEntity] {
+        let request: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
         do {
             return try viewContext.fetch(request)
         } catch {
@@ -53,20 +53,20 @@ class CoreDataStack {
         }
     }
     
-    func remove(task: Task) {
+    func remove(task: PostEntity) {
         viewContext.delete(task)
         
         save(context: viewContext)
     }
     
     func createNewTask(author: String, description: String, image: String, likes: Int, views: Int) {
-        let newTask = Task(context: viewContext)
-        newTask.id = UUID()
-        newTask.author = author
-        newTask.descript = description
-        newTask.image = image
-        newTask.likes = Int64(likes)
-        newTask.views = Int64(views)
+        let newPost = PostEntity(context: viewContext)
+        newPost.id = UUID()
+        newPost.author = author
+        newPost.descript = description
+        newPost.image = image
+        newPost.likes = Int64(likes)
+        newPost.views = Int64(views)
         
         save(context: viewContext)
     }

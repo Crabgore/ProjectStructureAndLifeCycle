@@ -10,7 +10,7 @@ import UIKit
 
 class LikesTableViewCell: UITableViewCell {
     
-    var post: Task? {
+    var post: PostEntity? {
         didSet {
             authorLabel.text = post?.author
             postImageView.image = UIImage(named: post?.image ?? "blue_pixel")
