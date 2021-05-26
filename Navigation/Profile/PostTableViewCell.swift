@@ -10,7 +10,7 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
     
-    var stack: CoreDataStack?
+    weak var delegate: PostTableCellDelegate?
     var post: Post? {
         didSet {
             authorLabel.text = post?.author
@@ -105,6 +105,7 @@ class PostTableViewCell: UITableViewCell {
     }
     
     @objc func doubleTap() {
-        stack!.createNewTask(author: post!.author, description: post!.description, image: post!.image, likes: post!.likes, views: post!.views)
+        guard let mPost = post else { return }
+        delegate?.savePost(post: mPost)
     }
 }

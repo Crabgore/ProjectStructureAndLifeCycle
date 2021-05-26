@@ -13,7 +13,8 @@ class LikesViewController: UIViewController {
     private let stack: CoreDataStack
     var coordinator: ProfileCoordinator?
     private let tableView = UITableView(frame: .zero, style: .plain)
-    private var tasks: [Task] = []
+    private var tasks: [PostEntity] = []
+    private let likesCellID = String(describing: LikesTableViewCell.self)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +58,7 @@ class LikesViewController: UIViewController {
         tableView.delegate = self
         tableView.register(
             LikesTableViewCell.self,
-            forCellReuseIdentifier: String(describing: LikesTableViewCell.self)
+            forCellReuseIdentifier: String(describing: likesCellID)
         )
     }
     
@@ -78,7 +79,7 @@ extension LikesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: LikesTableViewCell = tableView.dequeueReusableCell(withIdentifier: String(describing: LikesTableViewCell.self), for: indexPath) as! LikesTableViewCell
+        let cell: LikesTableViewCell = tableView.dequeueReusableCell(withIdentifier: likesCellID, for: indexPath) as! LikesTableViewCell
         cell.post = tasks[indexPath.row]
         return cell
     }

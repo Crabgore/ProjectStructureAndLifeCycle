@@ -213,7 +213,7 @@ extension ProfileViewController: UITableViewDataSource {
         } else {
             let cell: PostTableViewCell = tableView.dequeueReusableCell(withIdentifier: String(describing: PostTableViewCell.self), for: indexPath) as! PostTableViewCell
             cell.post = posts[indexPath.row]
-            cell.stack = stack
+            cell.delegate = self
             return cell
         }
     }
@@ -258,4 +258,14 @@ extension ProfileViewController: UITableViewDelegate {
             coordinator?.photosSelected()
         }
     }
+}
+
+extension ProfileViewController: PostTableCellDelegate {
+    func savePost(post: Post) {
+        stack.createNewTask(author: post.author, description: post.description, image: post.image, likes: post.likes, views: post.views)
+    }
+}
+
+protocol PostTableCellDelegate: AnyObject {
+    func savePost(post: Post)
 }
