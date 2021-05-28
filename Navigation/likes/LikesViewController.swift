@@ -39,6 +39,11 @@ class LikesViewController: UIViewController {
     }
     
     private func setupViews() {
+        let search = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(showPopup))
+        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(clearSearch))
+
+        navigationItem.rightBarButtonItems = [search, refresh]
+        
         view.addSubview(tableView)
         
         let constraints = [
@@ -66,7 +71,32 @@ class LikesViewController: UIViewController {
         tasks = stack.fetchTasks()
         tableView.reloadData()
     }
+    
+    private func reloadTasksWithPredicate(predicate: String) {
+        tasks = stack.fetchTasksWithPredicate(value: predicate)
+        tableView.reloadData()
+    }
+    
+    @objc private func showPopup() {
+        let alert = UIAlertController(title: "Поиск по автору", message: "Введите имя автора", preferredStyle: .alert)
 
+        alert.addTextField { (textField:UITextField) in
+            textField.keyboardType = .default
+             }
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            // Force unwrapping так как точно известно, что оно существует
+            let textField = alert!.textFields![0]
+            // Force unwrapping так как поиск по пустому тексту просто выдаёт пустой список, проверил
+            self.reloadTasksWithPredicate(predicate: textField.text!)
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc private func clearSearch() {
+        reloadTasks()
+    }
 }
 
 extension LikesViewController: UITableViewDataSource {
