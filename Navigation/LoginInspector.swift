@@ -22,6 +22,8 @@ import RealmSwift
 
 
 class LoginInspector: LoginViewControllerDelegate {
+    
+    
     func checkUsers() -> [User] {
         return realm?.objects(CachedUser.self).compactMap {
             guard let id = $0.id, let login = $0.login, let password = $0.password else { return nil }
@@ -54,7 +56,14 @@ class LoginInspector: LoginViewControllerDelegate {
     }
     
     private var realm: Realm? {
-        return try? Realm()
+        var key = Data(count: 64)
+        _ = key.withUnsafeMutableBytes { (pointers: UnsafeMutableRawBufferPointer) in
+            SecRandomCopyBytes(kSecRandomDefault, 64, pointers.baseAddress!)
+            
+        }
+        let config = Realm.Configuration(encryptionKey: key)
+        
+        return try? Realm(configuration: config)
     }
     
     func checkLogin(userLogin: String) -> Bool {
