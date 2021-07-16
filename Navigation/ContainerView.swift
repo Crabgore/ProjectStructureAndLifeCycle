@@ -11,11 +11,19 @@ import UIKit
 
 class ContainerView: UIStackView {
     
+    enum Strings: String {
+        case button
+        
+        var localized: String {
+            return NSLocalizedString(rawValue, comment: "")
+        }
+    }
+    
     var onTap: (() -> Void)?
     
     private lazy var upperButton: UIButton = {
         let button = UIButton()
-        button.setTitle("button", for: .normal)
+        button.setTitle(Strings.button.localized, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .red
         button.layer.cornerRadius = 10
@@ -28,7 +36,7 @@ class ContainerView: UIStackView {
     
     private lazy var lowerButton: UIButton = {
         let button = UIButton()
-        button.setTitle("button", for: .normal)
+        button.setTitle(Strings.button.localized, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .green
         button.layer.cornerRadius = 10

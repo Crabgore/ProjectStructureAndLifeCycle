@@ -20,9 +20,7 @@ import RealmSwift
     }
 }
 
-
 class LoginInspector: LoginViewControllerDelegate {
-    
     
     func checkUsers() -> [User] {
         return realm?.objects(CachedUser.self).compactMap {

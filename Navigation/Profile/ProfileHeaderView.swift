@@ -12,6 +12,16 @@ var isAnimating: Bool = false
 
 class ProfileHeaderView: UIView {
     
+    enum Strings: String {
+        case profileName
+        case status
+        case profileButton
+        
+        var localized: String {
+            return NSLocalizedString(rawValue, comment: "")
+        }
+    }
+    
     let imageView = UIImageView(image: #imageLiteral(resourceName: "cat"))
     private let profileLabel = UILabel()
     private let statusLabel = UILabel()
@@ -52,21 +62,21 @@ class ProfileHeaderView: UIView {
     }
     
     private func setupNameLabel() {
-        profileLabel.text = "Normal Cat"
+        profileLabel.text = Strings.profileName.localized
         profileLabel.textColor = .black
         profileLabel.font.withSize(18)
         profileLabel.font = UIFont.boldSystemFont(ofSize: 18)
     }
     
     private func setupStatusLabel() {
-        statusLabel.text = "Waiting for something..."
+        statusLabel.text = Strings.status.localized
         statusLabel.textColor = .gray
         statusLabel.font.withSize(14)
     }
  
     private func setupButton() {
         profileButton.backgroundColor = .blue
-        profileButton.setTitle("Show status", for: .normal)
+        profileButton.setTitle(Strings.profileButton.localized, for: .normal)
         profileButton.setTitleColor(.white, for: .normal)
         profileButton.layer.cornerRadius = 4
         profileButton.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -107,7 +117,7 @@ class ProfileHeaderView: UIView {
         if (textField.text != "") {
             statusText = textField.text!
         } else {
-            statusText = "Waiting for something..."
+            statusText = Strings.status.localized
         }
     }
 }

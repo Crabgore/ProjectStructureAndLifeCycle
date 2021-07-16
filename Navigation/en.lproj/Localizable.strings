@@ -1,0 +1,33 @@
+/* 
+  Localizable.strings
+  Navigation
+
+  Created by Mihail on 16.07.2021.
+  Copyright © 2021 Artem Novichkov. All rights reserved.
+*/
+
+"profileName" = "Normal Cat";
+"status" = "Waiting for something...";
+"profileButton" = "Show status";
+"emailTF" = "Enter email or login";
+"password" = "Enter password";
+"login" = "Login";
+"makePass" = "BruteForce password";
+"counter" = "You are on this screen for already ";
+"likes" = "Likes: ";
+"views" = "Views: ";
+"photos" = "Photos";
+"alert" = "show alert";
+"button" = "button";
+"profile" = "Profile";
+"feed" = "Feed";
+"incorrectData" = "Wrong data inserted. Check your data";
+"shortPassword" = "Password must be al least 6 symbols long";
+"incorrectEmail" = "Incorrect login";
+"error" = "Error";
+"OK" = "OK";
+"post" = "Post";
+"deletePost" = "Delete ppst?";
+"deletePostConfirm" = "You can't restore post";
+"cancel" = "Cancel";
+"delete" = "Delete";

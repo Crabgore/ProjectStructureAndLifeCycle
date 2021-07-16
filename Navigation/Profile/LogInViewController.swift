@@ -10,6 +10,22 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    enum Strings: String {
+        case emailTF
+        case password
+        case login
+        case makePass
+        case counter
+        
+        var localized: String {
+            return NSLocalizedString(rawValue, comment: "")
+        }
+        
+        func localize(count: Int) -> String {
+            return NSLocalizedString(rawValue, comment: "") + String(count)
+        }
+    }
+    
     var coordinator: ProfileCoordinator?
     private let scrollView = UIScrollView()
     private let wrapperView = UIView()
@@ -41,7 +57,7 @@ class LogInViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.textColor = .black
-        textField.placeholder = "Email or phone"
+        textField.placeholder = Strings.emailTF.localized
         textField.isUserInteractionEnabled = true
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.autocapitalizationType = .none
@@ -52,7 +68,7 @@ class LogInViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.textColor = .black
-        textField.placeholder = "Password"
+        textField.placeholder = Strings.password.localized
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.autocapitalizationType = .none
         textField.isSecureTextEntry = true
@@ -78,7 +94,7 @@ class LogInViewController: UIViewController {
     
     private lazy var loginButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Log in", for: .normal)
+        button.setTitle(Strings.login.localized, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel").alpha(0.8), for: .selected)
@@ -93,7 +109,7 @@ class LogInViewController: UIViewController {
     
     private lazy var pickUpPassword: UIButton = {
         let button = UIButton()
-        button.setTitle("Подобрать пароль", for: .normal)
+        button.setTitle(Strings.makePass.localized, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel").alpha(0.8), for: .selected)
@@ -117,7 +133,7 @@ class LogInViewController: UIViewController {
     
     private func startTimer() {
         let timer = Timer(timeInterval: 1, repeats: true) { (_) in
-            self.timerLabel.text = "Вы находитесь на этом экране \(self.count) секунд(ы)"
+            self.timerLabel.text = Strings.counter.localize(count: self.count)
             self.count += 1
             if self.count > 30 {
                 self.timerLabel.textColor = .red

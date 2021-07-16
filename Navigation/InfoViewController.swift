@@ -10,13 +10,21 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
+    enum Strings: String {
+        case alert
+        
+        var localized: String {
+            return NSLocalizedString(rawValue, comment: "")
+        }
+    }
+    
     var coordinator: FeedCoordinator?
     let urlString = "https://jsonplaceholder.typicode.com/todos/42"
     let planetString = "https://swapi.dev/api/planets/5"
     
     private lazy var showAlertButton: UIButton = {
         let button = UIButton()
-        button.setTitle("show alert", for: .normal)
+        button.setTitle(Strings.alert.localized, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .red
         button.layer.cornerRadius = 10
@@ -83,26 +91,26 @@ class InfoViewController: UIViewController {
     private func getData() {
         let titleUrl = URL(string: urlString)
         let planetURL = URL(string: planetString)
-        NetworkService.infoDataTask(url: titleUrl!, block: printInLabel)
-        NetworkService.infoDataTask(url: planetURL!, block: printInPlanetLabel)
+//        NetworkService.infoDataTask(url: titleUrl!, block: printInLabel)
+//        NetworkService.infoDataTask(url: planetURL!, block: printInPlanetLabel)
     }
     
-    private func printInLabel(json: Data) {
-        if let result = try? JSONSerialization.jsonObject(with: json, options: .mutableContainers) as? [String: Any] {
-            infoLabel.text = result["title"] as? String
-        }
-    }
-    
-    private func printInPlanetLabel(json: Data) {
-        if let resultL = String(data: json, encoding: .utf8) {
-            print("RESULTL: \(resultL)")
-        }
-        
-        if let result = try? JSONDecoder().decode(Planet.self, from: json) {
-            print("result: \(result)")
-            planetLabel.text = result.orbitalPeriod
-        } else {
-            print("BAD RESULT")
-        }
-    }
+//    private func printInLabel(json: Data) {
+//        if let result = try? JSONSerialization.jsonObject(with: json, options: .mutableContainers) as? [String: Any] {
+//            infoLabel.text = result["title"] as? String
+//        }
+//    }
+//
+//    private func printInPlanetLabel(json: Data) {
+//        if let resultL = String(data: json, encoding: .utf8) {
+//            print("RESULTL: \(resultL)")
+//        }
+//
+//        if let result = try? JSONDecoder().decode(Planet.self, from: json) {
+//            print("result: \(result)")
+//            planetLabel.text = result.orbitalPeriod
+//        } else {
+//            print("BAD RESULT")
+//        }
+//    }
 }

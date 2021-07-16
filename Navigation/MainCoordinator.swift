@@ -10,6 +10,16 @@ import Foundation
 import UIKit
 
 class MainCoordinator: Coordinator {
+    
+    enum Strings: String {
+        case profile
+        case feed
+        
+        var localized: String {
+            return NSLocalizedString(rawValue, comment: "")
+        }
+    }
+    
     var navigationController: UINavigationController?
     var tabBarController: UITabBarController?
     
@@ -22,14 +32,14 @@ class MainCoordinator: Coordinator {
         let profileVC = LogInViewController()
         let profileNavigationController = UINavigationController(rootViewController: profileVC)
         let profileCoordinator = ProfileCoordinator(navigationController: profileNavigationController, tabBarController: nil)
-        let profile = UITabBarItem(title: "Profile", image:UIImage(systemName: "person") , tag: 0)
+        let profile = UITabBarItem(title: Strings.profile.localized, image:UIImage(systemName: "person") , tag: 0)
         profileVC.delegate = LoginInspector()
         profileVC.coordinator = profileCoordinator
         profileVC.tabBarItem = profile
         
         let feedVC = FeedViewController(output: PostPresenter())
         let feedNavigationController = UINavigationController(rootViewController: feedVC)
-        let feed = UITabBarItem(title: "Feed", image: UIImage(systemName: "info.circle"), tag: 1)
+        let feed = UITabBarItem(title: Strings.feed.localized, image: UIImage(systemName: "info.circle"), tag: 1)
         feedVC.coordinator = FeedCoordinator(navigationController: feedNavigationController, tabBarController: nil)
         feedVC.tabBarItem = feed
 

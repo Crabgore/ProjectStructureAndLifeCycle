@@ -10,12 +10,20 @@ import UIKit
 
 class PhotosTableViewCell: UITableViewCell {
     
+    enum Strings: String {
+        case photos
+        
+        var localized: String {
+            return NSLocalizedString(rawValue, comment: "")
+        }
+    }
+    
     private let photoLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textColor = .black
         label.numberOfLines = 1
-        label.text = "Photos"
+        label.text = Strings.photos.localized
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
