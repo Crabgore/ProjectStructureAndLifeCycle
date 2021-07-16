@@ -10,6 +10,16 @@ import UIKit
 
 class ProfileView: UIView {
     
+    enum Strings: String {
+        case profileName
+        case status
+        case profileButton
+        
+        var localized: String {
+            return NSLocalizedString(rawValue, comment: "")
+        }
+    }
+    
     private var statusText: String?
 
     private let avatar: UIImageView = {
@@ -24,7 +34,7 @@ class ProfileView: UIView {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Normal Cat"
+        label.text = Strings.profileName.localized
         label.textColor = .black
         label.font.withSize(18)
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -33,7 +43,7 @@ class ProfileView: UIView {
     
     private let statusLabel: UILabel = {
         let label = UILabel()
-        label.text = "Waiting for something..."
+        label.text = Strings.status.localized
         label.textColor = .gray
         label.font.withSize(14)
         return label
@@ -42,7 +52,7 @@ class ProfileView: UIView {
     private let statusButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .blue
-        button.setTitle("Show status", for: .normal)
+        button.setTitle(Strings.profileButton.localized, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 4
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
@@ -94,7 +104,7 @@ class ProfileView: UIView {
         if (textField.text != "") {
             statusText = textField.text!
         } else {
-            statusText = "Waiting for something..."
+            statusText = Strings.status.localized
         }
     }
 }

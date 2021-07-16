@@ -10,13 +10,22 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
     
+    enum Strings: String {
+        case likes
+        case views
+        
+        func localize(count: Int) -> String {
+            return NSLocalizedString(rawValue, comment: "") + String(count)
+        }
+    }
+    
     var post: Post? {
         didSet {
             authorLabel.text = post?.author
             postImageView.image = UIImage(named: post?.image ?? "blue_pixel")
             descriptionLabel.text = post?.description
-            likesLabel.text = "Likes: \(post?.likes ?? 0)"
-            viewsLabel.text = "Views: \(post?.views ?? 0)"
+            likesLabel.text = Strings.likes.localize(count: post?.likes ?? 0)
+            viewsLabel.text = Strings.views.localize(count: post?.views ?? 0)
         }
     }
     

@@ -10,6 +10,19 @@ import Foundation
 import UIKit
 
 class FeedCoordinator: Coordinator {
+    
+    enum Strings: String {
+        case post
+        case deletePost
+        case deletePostConfirm
+        case cancel
+        case delete
+        
+        var localized: String {
+            return NSLocalizedString(rawValue, comment: "")
+        }
+    }
+    
     var tabBarController: UITabBarController?
     var navigationController: UINavigationController?
     var infoVC: InfoViewController?
@@ -21,7 +34,7 @@ class FeedCoordinator: Coordinator {
     
     func showPost() {
         let controller = PostViewController()
-        controller.post = "Post"
+        controller.post = Strings.post.localized
         controller.coordinator = self
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -33,11 +46,11 @@ class FeedCoordinator: Coordinator {
     }
     
     func showAlert() {
-        let alertController = UIAlertController(title: "Удалить пост?", message: "Пост нельзя будет восстановить", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Отмена", style: .default) { _ in
+        let alertController = UIAlertController(title: Strings.deletePost.localized, message: Strings.deletePostConfirm.localized, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: Strings.cancel.localized, style: .default) { _ in
             print("Отмена")
         }
-        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { _ in
+        let deleteAction = UIAlertAction(title: Strings.delete.localized, style: .destructive) { _ in
             print("Удалить")
         }
         alertController.addAction(cancelAction)

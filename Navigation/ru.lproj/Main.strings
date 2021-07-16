@@ -1,0 +1,21 @@
+
+/* Class = "UITabBarItem"; title = "Feed"; ObjectID = "0HN-zR-0uF"; */
+"0HN-zR-0uF.title" = "Лента";
+
+/* Class = "UIButton"; normalTitle = "Show alert"; ObjectID = "7My-cB-a4g"; */
+"7My-cB-a4g.normalTitle" = "Показать предупреждение";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "C5H-jf-3mv"; */
+"C5H-jf-3mv.normalTitle" = "Кнопка";
+
+/* Class = "UINavigationItem"; title = "Feed"; ObjectID = "CTA-33-ygc"; */
+"CTA-33-ygc.title" = "Лента";
+
+/* Class = "UINavigationItem"; title = "Post"; ObjectID = "N0m-Za-SVh"; */
+"N0m-Za-SVh.title" = "Пост";
+
+/* Class = "UITabBarItem"; title = "Profile"; ObjectID = "SyK-iK-f7q"; */
+"SyK-iK-f7q.title" = "Профиль";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "b6u-a8-15n"; */
+"b6u-a8-15n.normalTitle" = "Кнопка";

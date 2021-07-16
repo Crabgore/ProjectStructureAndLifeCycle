@@ -10,6 +10,19 @@ import Foundation
 import UIKit
 
 class ProfileCoordinator: Coordinator {
+    
+    enum Strings: String {
+        case incorrectData
+        case shortPassword
+        case incorrectEmail
+        case error
+        case OK
+        
+        var localized: String {
+            return NSLocalizedString(rawValue, comment: "")
+        }
+    }
+    
     var tabBarController: UITabBarController?
     var navigationController: UINavigationController?
     
@@ -38,15 +51,15 @@ class ProfileCoordinator: Coordinator {
         var message = ""
         switch error {
         case .incorrectData:
-            message = "Введены неверные данные. Проверьте введённые данные"
+            message = Strings.incorrectData.localized
         case .shortPassword:
-            message = "Пароль должен содержать минимум 6 символов"
+            message = Strings.shortPassword.localized
         case .incorrectEmail:
-            message = "Логин не соответсвует адресу почты"
+            message = Strings.incorrectEmail.localized
         }
         
-        let alertController = UIAlertController(title: "Ошибка!", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+        let alertController = UIAlertController(title: Strings.error.localized, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: Strings.OK.localized, style: .default) { _ in
             print("OK")
         }
         alertController.addAction(okAction)
