@@ -43,7 +43,7 @@ class PhotosViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: "cellID")
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         return collectionView
     }()
 
@@ -55,6 +55,7 @@ class PhotosViewController: UIViewController {
     }
     
     private func setupViews() {
+        view.backgroundColor = .systemBackground
         title = "Photo Gallery"
         
         view.addSubview(collectionView)

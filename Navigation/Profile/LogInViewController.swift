@@ -56,7 +56,7 @@ class LogInViewController: UIViewController {
     private let emailTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.textColor = .black
+        textField.textColor = .label
         textField.placeholder = Strings.emailTF.localized
         textField.isUserInteractionEnabled = true
         textField.font = UIFont.systemFont(ofSize: 16)
@@ -67,7 +67,7 @@ class LogInViewController: UIViewController {
     private let passwordTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.textColor = .black
+        textField.textColor = .label
         textField.placeholder = Strings.password.localized
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.autocapitalizationType = .none
@@ -88,7 +88,7 @@ class LogInViewController: UIViewController {
     private let deviderView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .separator
         return view
     }()
     
@@ -124,10 +124,7 @@ class LogInViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         setupViews()
-        navigationController?.navigationBar.isHidden = true
-        
         startTimer()
     }
     
@@ -193,6 +190,8 @@ class LogInViewController: UIViewController {
     }
     
     private func setupViews() {
+        navigationController?.navigationBar.isHidden = true
+        view.backgroundColor = .systemBackground
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         wrapperView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.contentInsetAdjustmentBehavior = .automatic

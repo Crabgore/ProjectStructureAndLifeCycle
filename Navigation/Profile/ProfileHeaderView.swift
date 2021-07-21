@@ -63,14 +63,14 @@ class ProfileHeaderView: UIView {
     
     private func setupNameLabel() {
         profileLabel.text = Strings.profileName.localized
-        profileLabel.textColor = .black
+        profileLabel.textColor = .label
         profileLabel.font.withSize(18)
-        profileLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        profileLabel.font = .boldSystemFont(ofSize: 18)
     }
     
     private func setupStatusLabel() {
         statusLabel.text = Strings.status.localized
-        statusLabel.textColor = .gray
+        statusLabel.textColor = .secondaryLabel
         statusLabel.font.withSize(14)
     }
  
@@ -90,9 +90,9 @@ class ProfileHeaderView: UIView {
         textField.layer.cornerRadius = 12
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
-        textField.backgroundColor = .white
+        textField.backgroundColor = .systemGray6
         textField.font?.withSize(15)
-        textField.textColor = .black
+        textField.textColor = .label
         textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
     }
     

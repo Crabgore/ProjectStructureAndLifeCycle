@@ -65,6 +65,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupViews() {
+        view.backgroundColor = .systemBackground
         view.addSubview(tableView)
         view.addSubview(exitButton)
         
