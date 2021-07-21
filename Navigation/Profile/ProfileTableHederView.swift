@@ -23,7 +23,7 @@ class ProfileTableHederView: UITableViewHeaderFooterView {
     }
     
     func setupViews() {
-        contentView.backgroundColor = .systemGray6
+        contentView.backgroundColor = .systemBackground
         
         profileHeaderView = ProfileHeaderView()
         profileHeaderView.translatesAutoresizingMaskIntoConstraints = false

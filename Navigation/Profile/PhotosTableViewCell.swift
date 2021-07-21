@@ -21,7 +21,7 @@ class PhotosTableViewCell: UITableViewCell {
     private let photoLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        label.textColor = .black
+        label.textColor = .label
         label.numberOfLines = 1
         label.text = Strings.photos.localized
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +32,7 @@ class PhotosTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.image = UIImage(systemName: "arrowshape.turn.up.right")
-        imageView.tintColor = UIColor.black
+        imageView.tintColor = .label
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
