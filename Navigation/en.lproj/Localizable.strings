@@ -12,6 +12,7 @@
 "emailTF" = "Enter email or login";
 "password" = "Enter password";
 "login" = "Login";
+"biometric" = "Use biometric";
 "makePass" = "BruteForce password";
 "counter" = "You are on this screen for already ";
 "likes" = "Likes: ";
