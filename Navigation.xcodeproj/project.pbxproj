@@ -29,6 +29,7 @@
 		87208CB826A1BDBA009E17F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 87208CB726A1BDBA009E17F1 /* InfoPlist.strings */; };
 		87208CBD26A1BEA1009E17F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 87208CBF26A1BEA1009E17F1 /* Localizable.strings */; };
 		87208CC626A830A7009E17F1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87208CC526A830A7009E17F1 /* Colors.swift */; };
+		87208D0A26C3CD68009E17F1 /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87208D0926C3CD68009E17F1 /* LocalAuthorizationService.swift */; };
 		8744562E25B32F1F002565D0 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744562D25B32F1F002565D0 /* ProfileHeaderView.swift */; };
 		8744563225B32F37002565D0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744563125B32F37002565D0 /* ProfileViewController.swift */; };
 		874FA77625C176D200EF39F0 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874FA77525C176D200EF39F0 /* PostTableViewCell.swift */; };
@@ -77,6 +78,7 @@
 		87208CC226A1BF24009E17F1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		87208CC326A1BF24009E17F1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		87208CC526A830A7009E17F1 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		87208D0926C3CD68009E17F1 /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
 		8744562D25B32F1F002565D0 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		8744563125B32F37002565D0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		874FA77525C176D200EF39F0 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				87F0E3A225CACEB700A275C0 /* PhotosViewController.swift */,
 				87F0E3A525CACF4E00A275C0 /* PhotosCollectionViewCell.swift */,
 				87142DF526271E9F00CB696B /* BruteForceOperations.swift */,
+				87208D0926C3CD68009E17F1 /* LocalAuthorizationService.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				060782B2250CE27700A87020 /* AppDelegate.swift in Sources */,
 				87208CC626A830A7009E17F1 /* Colors.swift in Sources */,
 				87BBE20725C04F33000ED8CC /* LogInViewController.swift in Sources */,
+				87208D0A26C3CD68009E17F1 /* LocalAuthorizationService.swift in Sources */,
 				87142DEB2624517200CB696B /* Coordinator.swift in Sources */,
 				87F0E3A925CAD1FE00A275C0 /* Photos.swift in Sources */,
 				87EA71FA26569A5B001DDF7B /* User.swift in Sources */,

@@ -15,6 +15,7 @@ class LogInViewController: UIViewController {
         case password
         case login
         case makePass
+        case biometric
         case counter
         
         var localized: String {
@@ -29,6 +30,7 @@ class LogInViewController: UIViewController {
     var coordinator: ProfileCoordinator?
     private let scrollView = UIScrollView()
     private let wrapperView = UIView()
+    private let biometricService = LocalAuthorizationService()
     var delegate: LoginViewControllerDelegate?
     
     var count = 0
@@ -121,6 +123,21 @@ class LogInViewController: UIViewController {
         button.addTarget(self, action: #selector(pickUpPass), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var biometricAuth: UIButton = {
+        let button = UIButton()
+        button.setTitle(Strings.biometric.localized, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel").alpha(0.8), for: .selected)
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel").alpha(0.8), for: .highlighted)
+        button.layer.cornerRadius = 10
+        button.layer.masksToBounds = true
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(biometricBtnPressed), for: .touchUpInside)
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -189,6 +206,16 @@ class LogInViewController: UIViewController {
         operationQueue.addOperation(operation)
     }
     
+    @objc private func biometricBtnPressed() {
+        biometricService.authorizeIfPossible(authWithBiometric)
+    }
+    
+    private func authWithBiometric(approved: Bool) {
+        if approved {
+            coordinator?.loginButtonPressed()
+        }
+    }
+    
     private func setupViews() {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .systemBackground
@@ -198,7 +225,7 @@ class LogInViewController: UIViewController {
         
         view.addSubview(scrollView)
         scrollView.addSubview(wrapperView)
-        wrapperView.addSubviews(logoImageView, textViews, loginButton, pickUpPassword, spinner, timerLabel)
+        wrapperView.addSubviews(logoImageView, textViews, loginButton, pickUpPassword, biometricAuth, spinner, timerLabel)
         textViews.addSubviews(emailTextField, deviderView, passwordTextField)
         
         
@@ -254,7 +281,12 @@ class LogInViewController: UIViewController {
             pickUpPassword.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
             pickUpPassword.heightAnchor.constraint(equalToConstant: 50),
             
-            spinner.topAnchor.constraint(equalTo: pickUpPassword.bottomAnchor, constant: 16),
+            biometricAuth.topAnchor.constraint(equalTo: pickUpPassword.bottomAnchor, constant: 16),
+            biometricAuth.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 16),
+            biometricAuth.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
+            biometricAuth.heightAnchor.constraint(equalToConstant: 50),
+            
+            spinner.topAnchor.constraint(equalTo: biometricAuth.bottomAnchor, constant: 16),
             spinner.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 16),
             spinner.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
             spinner.widthAnchor.constraint(equalToConstant: 50),
